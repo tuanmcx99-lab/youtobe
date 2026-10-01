@@ -3,610 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Clone - Modern UI</title>
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-main: #0f0f0f;
-            --bg-secondary: #121212;
-            --bg-hover: #272727;
-            --bg-card: #1e1e1e;
-            --text-main: #f1f1f1;
-            --text-sub: #aaaaaa;
-            --accent-red: #ff0000;
-            --border-color: #303030;
-            --sidebar-width: 240px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* ================= 1. HEADER ================= */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 56px;
-            padding: 0 16px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: var(--bg-main);
-            z-index: 1000;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .menu-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 18px;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .menu-btn:hover {
-            background-color: var(--bg-hover);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: bold;
-            font-size: 18px;
-            letter-spacing: -0.5px;
-        }
-
-        .logo i {
-            color: var(--accent-red);
-            font-size: 22px;
-        }
-
-        .header-center {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 0 1 730px;
-        }
-
-        .search-box {
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        .search-box input {
-            width: 100%;
-            height: 40px;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 40px 0 0 40px;
-            padding: 0 16px;
-            color: var(--text-main);
-            font-size: 15px;
-            outline: none;
-        }
-
-        .search-box input:focus {
-            border-color: #1c62b9;
-        }
-
-        .search-btn {
-            height: 40px;
-            width: 64px;
-            background-color: #222222;
-            border: 1px solid var(--border-color);
-            border-left: none;
-            border-radius: 0 40px 40px 0;
-            color: var(--text-main);
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .search-btn:hover {
-            background-color: var(--bg-hover);
-        }
-
-        .mic-btn {
-            height: 40px;
-            width: 40px;
-            border-radius: 50%;
-            background-color: #222222;
-            border: none;
-            color: var(--text-main);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mic-btn:hover {
-            background-color: var(--bg-hover);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 18px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .icon-btn:hover {
-            background-color: var(--bg-hover);
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            object-fit: cover;
-        }
-
-        /* ================= 2. SIDEBAR ================= */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--bg-main);
-            position: fixed;
-            top: 56px;
-            bottom: 0;
-            left: 0;
-            overflow-y: auto;
-            padding: 12px;
-            transition: width 0.2s ease;
-            z-index: 900;
-        }
-
-        .sidebar.collapsed {
-            width: 72px;
-            padding: 4px;
-        }
-
-        .sidebar.collapsed .sidebar-section-title,
-        .sidebar.collapsed .nav-item span {
-            display: none;
-        }
-
-        .sidebar.collapsed .nav-item {
-            flex-direction: column;
-            padding: 14px 0;
-            justify-content: center;
-            font-size: 10px;
-            gap: 6px;
-        }
-
-        .sidebar.collapsed .nav-item i {
-            font-size: 18px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            padding: 10px 12px;
-            color: var(--text-main);
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-
-        .nav-item:hover {
-            background-color: var(--bg-hover);
-        }
-
-        .nav-item.active {
-            background-color: var(--bg-hover);
-            font-weight: bold;
-        }
-
-        .nav-item i {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .sidebar-divider {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 12px 0;
-        }
-
-        .sidebar-section-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--text-sub);
-            padding: 8px 12px;
-        }
-
-        /* ================= 3. MAIN CONTENT ================= */
-        .main-wrapper {
-            margin-top: 56px;
-            margin-left: var(--sidebar-width);
-            padding: 0 24px 24px 24px;
-            transition: margin-left 0.2s ease;
-        }
-
-        .main-wrapper.expanded {
-            margin-left: 72px;
-        }
-
-        /* Chips Bar */
-        .category-chips {
-            display: flex;
-            gap: 12px;
-            padding: 12px 0;
-            overflow-x: auto;
-            position: sticky;
-            top: 56px;
-            background-color: var(--bg-main);
-            z-index: 800;
-            scrollbar-width: none;
-        }
-
-        .category-chips::-webkit-scrollbar {
-            display: none;
-        }
-
-        .chip {
-            padding: 6px 12px;
-            background-color: var(--bg-hover);
-            color: var(--text-main);
-            border-radius: 8px;
-            font-size: 14px;
-            white-space: nowrap;
-            cursor: pointer;
-            border: none;
-            transition: background 0.2s;
-        }
-
-        .chip.active {
-            background-color: var(--text-main);
-            color: var(--bg-main);
-            font-weight: 500;
-        }
-
-        .chip:hover:not(.active) {
-            background-color: #3f3f3f;
-        }
-
-        /* Video Grid Layout */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px 16px;
-            margin-top: 16px;
-        }
-
-        .video-card {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .thumbnail-box {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 12px;
-            overflow: hidden;
-            background-color: var(--bg-card);
-        }
-
-        .thumbnail-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.2s;
-        }
-
-        .video-card:hover .thumbnail-box img {
-            transform: scale(1.03);
-        }
-
-        .video-time {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 500;
-            padding: 3px 6px;
-            border-radius: 4px;
-        }
-
-        .video-details {
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .channel-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-
-        .video-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .video-title {
-            font-size: 15px;
-            font-weight: 500;
-            line-height: 1.3;
-            color: var(--text-main);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 4px;
-        }
-
-        .channel-name {
-            font-size: 13px;
-            color: var(--text-sub);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .channel-name i {
-            font-size: 11px;
-        }
-
-        .video-meta {
-            font-size: 13px;
-            color: var(--text-sub);
-            margin-top: 2px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 1. HEADER -->
-    <header>
-        <div class="header-left">
-            <button class="menu-btn" id="toggleSidebar"><i class="fa-solid fa-bars"></i></button>
-            <a href="#" class="logo">
-                <i class="fa-brands fa-youtube"></i>
-                <span>YouTube<sup>VN</sup></span>
-            </a>
-        </div>
-
-        <div class="header-center">
-            <div class="search-box">
-                <input type="text" placeholder="Tìm kiếm...">
-                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-            <button class="mic-btn"><i class="fa-solid fa-microphone"></i></button>
-        </div>
-
-        <div class="header-right">
-            <button class="icon-btn"><i class="fa-solid fa-video"></i></button>
-            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar">
-        </div>
-    </header>
-
-    <!-- 2. SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> <span>Trang chủ</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-bolt"></i> <span>Shorts</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-layer-group"></i> <span>Kênh đăng ký</span></a>
-        
-        <div class="sidebar-divider"></div>
-        
-        <div class="sidebar-section-title">Bạn</div>
-        <a href="#" class="nav-item"><i class="fa-solid fa-box-archive"></i> <span>Thư viện</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> <span>Lịch sử</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-clock"></i> <span>Xem sau</span></a>
-        <a href="#" class="nav-item"><i class="fa-regular fa-thumbs-up"></i> <span>Video đã thích</span></a>
-
-        <div class="sidebar-divider"></div>
-
-        <div class="sidebar-section-title">Khám phá</div>
-        <a href="#" class="nav-item"><i class="fa-solid fa-fire"></i> <span>Thịnh hành</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-music"></i> <span>Âm nhạc</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-gamepad"></i> <span>Trò chơi</span></a>
-        <a href="#" class="nav-item"><i class="fa-regular fa-newspaper"></i> <span>Tin tức</span></a>
-    </aside>
-
-    <!-- 3. MAIN CONTENT -->
-    <main class="main-wrapper" id="mainContent">
-        <!-- Filter Chips -->
-        <div class="category-chips">
-            <button class="chip active">Tất cả</button>
-            <button class="chip">Âm nhạc</button>
-            <button class="chip">Trò chơi</button>
-            <button class="chip">Danh sách phát</button>
-            <button class="chip">Phim ảnh</button>
-            <button class="chip">Hoạt hình</button>
-            <button class="chip">Công nghệ</button>
-            <button class="chip">Đọc tin</button>
-            <button class="chip">Trực tiếp</button>
-            <button class="chip">Mới cập nhật</button>
-        </div>
-
-        <!-- Video Grid -->
-        <div class="video-grid" id="videoContainer">
-            <!-- Dynamic JavaScript Render -->
-        </div>
-    </main>
-
-    <!-- JAVASCRIPT -->
-    <script>
-        // Dữ liệu mẫu video
-        const videos = [
-            {
-                title: "Hướng dẫn Lập trình Web Fullstack cho người mới bắt đầu 2026",
-                channel: "Lập Trình Thực Chiến",
-                views: "154 N lượt xem",
-                time: "2 ngày trước",
-                duration: "24:15",
-                thumbnail: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=600&auto=format&fit=crop&q=80",
-                avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80"
-            },
-            {
-                title: "Nhạc Lofi Chill Nhẹ Nhàng Học Bài & Làm Việc Hăng Hái | Chill Vibes",
-                channel: "Lofi City",
-                views: "1,2 Triệu lượt xem",
-                time: "1 tháng trước",
-                duration: "1:45:00",
-                thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80"
-            },
-            {
-                title: "Top 10 Công Nghệ AI Bứt Phá Sẽ Thay Đổi Thế Giới Trong Năm Nay",
-                channel: "Tech Discovery",
-                views: "89 N lượt xem",
-                time: "5 giờ trước",
-                duration: "15:30",
-                thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
-            },
-            {
-                title: "Trải Nghiệm Du Lịch Khám Phá Vùng Đất Băng Tuyết Tuyệt Đẹp",
-                channel: "World Travel Vlogs",
-                views: "430 N lượt xem",
-                time: "3 tuần trước",
-                duration: "18:42",
-                thumbnail: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80",
-                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80"
-            },
-            {
-                title: "Cách Phối Đồ Streetwear Cực Chất Cho Mùa Thu Đông",
-                channel: "Fashion & Life",
-                views: "45 N lượt xem",
-                time: "1 ngày trước",
-                duration: "10:05",
-                thumbnail: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop&q=80",
-                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
-            },
-            {
-                title: "Những Món Ăn Đường Phố Đỉnh Cao Bạn Phải Thử Một Lần Trong Đời",
-                channel: "Foodie Nation",
-                views: "820 N lượt xem",
-                time: "2 tháng trước",
-                duration: "12:50",
-                thumbnail: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop&q=80",
-                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80"
-            }
-        ];
-
-        // Render thẻ video ra HTML
-        const container = document.getElementById('videoContainer');
-        
-        function renderVideos() {
-            // Nhân bản mảng video để tạo trang đầy đặn
-            const displayList = [...videos, ...videos];
-            
-            container.innerHTML = displayList.map(item => `
-                <div class="video-card">
-                    <div class="thumbnail-box">
-                        <img src="${item.thumbnail}" alt="Thumbnail">
-                        <span class="video-time">${item.duration}</span>
-                    </div>
-                    <div class="video-details">
-                        <img src="${item.avatar}" alt="Avatar" class="channel-avatar">
-                        <div class="video-info">
-                            <h3 class="video-title">${item.title}</h3>
-                            <div class="channel-name">${item.channel} <i class="fa-solid fa-circle-check"></i></div>
-                            <div class="video-meta">${item.views} • ${item.time}</div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        renderVideos();
-
-        // Xử lý đóng/mở Sidebar
-        const toggleBtn = document.getElementById('toggleSidebar');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
-
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('expanded');
-        });
-
-        // Xử lý active thẻ Filter Chips
-        const chips = document.querySelectorAll('.chip');
-        chips.forEach(chip => {
-            chip.addEventListener('click', () => {
-                chips.forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-            });
-        });
-    </script>
-</body>
-</html>
-💡 Bạn có muốn tôi phát triển thêm trang xem chi tiết video (Watch Page) với khung phát video lớn và cột danh sách video đề xuất ở bên phải không?
-https://www.youtube.com/watch?v=J8rs-psIiDI&list=RDMMJ8rs-psIiDI&start_radio=1 tôi muốn chèn link youtobe này vào giữa màn hình và người dùng bấm vào để xem dc, ngoài ra cũng có thêm các mục khác để chèn đường link video quảng cáo chiếu đồng thời khi bật trang web lên là video quảng cáo đấy tự chạy, hãy sửa lại code
-
-
-Thoughts
-Dưới đây là mã nguồn đã được nâng cấp. Trong bản cập nhật này:
-Trình phát Video Chính ở Trung tâm: Đã chèn trực tiếp Video YouTube theo đường link bạn gửi (https://www.youtube.com/watch?v=J8rs-psIiDI) dưới dạng iframe sắc nét ở vị trí trung tâm, kèm các nút chức năng (Thích, Chia sẻ, Đăng ký).
-Khu vực Video Quảng cáo Tự động phát (Autoplay Ads): Ở cột bên phải được trang bị khung Quảng cáo Video. Khi vừa tải trang web lên, video quảng cáo sẽ tự động chạy (nhờ tham số autoplay=1&mute=1).
-Lưới Video Đề xuất: Vẫn giữ nguyên layout phong cách YouTube hiện đại bên dưới.
-⚠️ Lưu ý về chính sách trình duyệt: Các trình duyệt hiện đại (Chrome, Safari, Edge) bắt buộc các video tự động chạy khi vừa vào trang phải ở chế độ Tắt tiếng (mute=1). Người dùng có thể bấm bật tiếng bất kỳ lúc nào trên khung video.
-Mã nguồn HTML / CSS / JS hoàn chỉnh:
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Clone - Player & Autoplay Ads</title>
+    <title>Xem phim cùng Baiuly Studio!</title>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #0f0f0f;
-            --bg-secondary: #121212;
+            --bg-secondary: #1a1a1a;
             --bg-hover: #272727;
             --bg-card: #1f1f1f;
             --text-main: #f1f1f1;
             --text-sub: #aaaaaa;
             --accent-red: #ff0000;
             --border-color: #303030;
-            --sidebar-width: 240px;
         }
 
         * {
@@ -622,60 +31,39 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             overflow-x: hidden;
         }
 
-        /* ================= 1. HEADER ================= */
+        /* ================= 1. HEADER (Đã bỏ Menu & Account) ================= */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 56px;
-            padding: 0 16px;
+            height: 60px;
+            padding: 0 4%;
             position: fixed;
             top: 0; left: 0; right: 0;
             background-color: var(--bg-main);
             z-index: 1000;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid var(--border-color);
         }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .menu-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 18px;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .menu-btn:hover { background-color: var(--bg-hover); }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 8px;
             text-decoration: none;
             color: var(--text-main);
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
         }
 
-        .logo i { color: var(--accent-red); font-size: 22px; }
-
-        .header-center {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 0 1 600px;
+        .logo i { 
+            color: var(--accent-red); 
+            font-size: 26px; 
         }
 
         .search-box {
             display: flex;
             width: 100%;
+            max-width: 500px;
         }
 
         .search-box input {
@@ -687,10 +75,16 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             padding: 0 16px;
             color: var(--text-main);
             outline: none;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            border-color: #3ea6ff;
         }
 
         .search-btn {
-            height: 40px; width: 60px;
+            height: 40px; 
+            width: 60px;
             background-color: #222;
             border: 1px solid var(--border-color);
             border-left: none;
@@ -699,76 +93,33 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             cursor: pointer;
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .search-btn:hover {
+            background-color: var(--bg-hover);
         }
 
-        .user-avatar {
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* ================= 2. SIDEBAR ================= */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--bg-main);
-            position: fixed;
-            top: 56px; bottom: 0; left: 0;
-            overflow-y: auto;
-            padding: 12px;
-            transition: width 0.2s ease;
-            z-index: 900;
-        }
-
-        .sidebar.collapsed { width: 72px; padding: 4px; }
-        .sidebar.collapsed .nav-item span { display: none; }
-        .sidebar.collapsed .nav-item {
-            flex-direction: column;
-            padding: 12px 0;
-            font-size: 10px;
-            gap: 4px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 10px 12px;
-            color: var(--text-main);
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 14px;
-        }
-
-        .nav-item:hover, .nav-item.active { background-color: var(--bg-hover); }
-
-        /* ================= 3. MAIN CONTENT LAYOUT ================= */
+        /* ================= 2. MAIN LAYOUT (Full Width) ================= */
         .main-wrapper {
-            margin-top: 56px;
-            margin-left: var(--sidebar-width);
-            padding: 20px;
-            transition: margin-left 0.2s ease;
+            margin-top: 60px;
+            padding: 24px 4%;
         }
 
-        .main-wrapper.expanded { margin-left: 72px; }
-
-        /* Bố cục 2 Cột: Video chính bên trái, Quảng cáo & Đề xuất bên phải */
         .content-container {
             display: grid;
-            grid-template-columns: 1fr 380px;
+            grid-template-columns: 1fr 360px;
             gap: 24px;
         }
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1024px) {
             .content-container {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Video Player Chính */
+        /* ================= 3. TRÌNH PHÁT VIDEO CHÍNH ================= */
+        .main-video-area {
+            scroll-margin-top: 80px;
+        }
+
         .video-player-wrapper {
             position: relative;
             width: 100%;
@@ -776,7 +127,7 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             background-color: #000;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
         }
 
         .video-player-wrapper iframe {
@@ -794,6 +145,7 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             font-weight: bold;
             margin-bottom: 12px;
             line-height: 1.4;
+            color: #fff;
         }
 
         .channel-bar {
@@ -812,19 +164,27 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             gap: 12px;
         }
 
-        .channel-avatar-large {
-            width: 44px; height: 44px;
+        .channel-avatar {
+            width: 44px; 
+            height: 44px;
             border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--accent-red);
         }
 
         .subscribe-btn {
             background-color: #ffffff;
             color: #000000;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
+            transition: background 0.2s;
         }
 
         .subscribe-btn:hover { background-color: #d9d9d9; }
@@ -910,71 +270,108 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             text-decoration: none;
         }
 
-        /* ================= 5. VIDEO GRID DƯỚI ================= */
+        /* ================= 5. DANH SÁCH 20 PHIM BAIULY STUDIO ================= */
         .more-videos-section {
-            margin-top: 32px;
+            margin-top: 40px;
         }
 
         .section-heading {
-            font-size: 18px;
-            margin-bottom: 16px;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid var(--accent-red);
+            padding-left: 12px;
         }
 
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px 16px;
+            gap: 22px 16px;
         }
 
         .video-card {
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #222;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+            border-color: #444;
         }
 
         .thumb-container {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
-            border-radius: 8px;
-            overflow: hidden;
             background-color: #222;
         }
 
         .thumb-container img {
-            width: 100%; height: 100%;
+            width: 100%; 
+            height: 100%;
             object-fit: cover;
         }
 
-        .video-duration {
+        .play-overlay {
             position: absolute;
-            bottom: 6px; right: 6px;
-            background: rgba(0,0,0,0.8);
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-size: 11px;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .play-overlay i {
+            font-size: 36px;
+            color: var(--accent-red);
+            background: #fff;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .video-card:hover .play-overlay {
+            opacity: 1;
         }
 
         .video-meta-box {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            padding: 12px;
         }
 
         .v-title {
             font-size: 14px;
             font-weight: 500;
-            line-height: 1.3;
+            line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            color: #f1f1f1;
         }
 
-        .v-channel, .v-stats {
+        .v-channel {
             font-size: 12px;
             color: var(--text-sub);
-            margin-top: 3px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .v-stats {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 2px;
         }
     </style>
 </head>
@@ -982,47 +379,27 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
 
     <!-- 1. HEADER -->
     <header>
-        <div class="header-left">
-            <button class="menu-btn" id="toggleSidebar"><i class="fa-solid fa-bars"></i></button>
-            <a href="#" class="logo">
-                <i class="fa-brands fa-youtube"></i>
-                <span>YouTube<sup>VN</sup></span>
-            </a>
-        </div>
+        <a href="#" class="logo">
+            <i class="fa-brands fa-youtube"></i>
+            <span>Xem phim cùng Baiuly Studio!</span>
+        </a>
 
-        <div class="header-center">
-            <div class="search-box">
-                <input type="text" placeholder="Tìm kiếm phim, video...">
-                <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
-        </div>
-
-        <div class="header-right">
-            <button class="menu-btn"><i class="fa-solid fa-video"></i></button>
-            <button class="menu-btn"><i class="fa-regular fa-bell"></i></button>
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar">
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm phim Tu Tiên, Donghua...">
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </header>
 
-    <!-- 2. SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> <span>Trang chủ</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-bolt"></i> <span>Shorts</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-layer-group"></i> <span>Kênh đăng ký</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-clock-rotate-left"></i> <span>Lịch sử</span></a>
-        <a href="#" class="nav-item"><i class="fa-solid fa-thumbs-up"></i> <span>Đã thích</span></a>
-    </aside>
-
-    <!-- 3. MAIN CONTENT -->
-    <main class="main-wrapper" id="mainContent">
+    <!-- 2. MAIN CONTENT -->
+    <main class="main-wrapper">
         <div class="content-container">
             
-            <!-- CỘT TRÁI: VIDEO CHÍNH TRUNG TÂM -->
-            <div class="main-video-area">
+            <!-- CỘT TRÁI: VIDEO PHÁT CHÍNH Ở TRUNG TÂM -->
+            <div class="main-video-area" id="playerSection">
                 <div class="video-player-wrapper">
-                    <!-- Link YouTube phát ở trung tâm -->
                     <iframe 
-                        src="https://www.youtube.com/embed/J8rs-psIiDI?autoplay=0&rel=0" 
+                        id="mainIframe"
+                        src="https://www.youtube.com/embed/hFdf6KnNZow?autoplay=0&playsinline=1&enablejsapi=1&rel=0" 
                         title="YouTube video player" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         allowfullscreen>
@@ -1030,20 +407,23 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
                 </div>
 
                 <div class="main-video-info">
-                    <h1 class="main-video-title">Video Nhạc Hay Đặc Sắc - Xem Trực Tuyến HD</h1>
+                    <h1 class="main-video-title" id="mainVideoTitle">
+                        Full S1&S2&S3 | Từ Phế Vật Vong Quốc Đến Đỉnh Cấp Thiên Kiêu: Ta Dựa Vào Thiên Nhãn
+                    </h1>
                     <div class="channel-bar">
                         <div class="channel-left">
-                            <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80" class="channel-avatar-large" alt="Channel">
+                            <div class="channel-avatar">BS</div>
                             <div>
-                                <div style="font-weight: bold; font-size: 15px;">Official Music Channel <i class="fa-solid fa-circle-check" style="color: #aaa; font-size: 12px;"></i></div>
-                                <div style="font-size: 12px; color: #aaa;">2.4 Triệu người đăng ký</div>
+                                <div style="font-weight: bold; font-size: 15px; display: flex; align-items: center; gap: 5px;">
+                                    Baiuly Studio <i class="fa-solid fa-circle-check" style="color: #3ea6ff; font-size: 12px;"></i>
+                                </div>
+                                <div style="font-size: 12px; color: #aaa;">Kênh Phim Donghua Storytelling</div>
                             </div>
                             <button class="subscribe-btn">Đăng ký</button>
                         </div>
                         <div class="action-btns">
-                            <button class="btn-action"><i class="fa-regular fa-thumbs-up"></i> 125 N</button>
+                            <button class="btn-action"><i class="fa-regular fa-thumbs-up"></i> Thích</button>
                             <button class="btn-action"><i class="fa-solid fa-share"></i> Chia sẻ</button>
-                            <button class="btn-action"><i class="fa-solid fa-download"></i> Tải xuống</button>
                         </div>
                     </div>
                 </div>
@@ -1052,26 +432,25 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
             <!-- CỘT PHẢI: QUẢNG CÁO TỰ ĐỘNG PHÁT (AUTOPLAY ADS) -->
             <div class="ad-sidebar">
                 
-                <!-- Khung Quảng cáo 1 (Tự động phát khi tải trang) -->
+                <!-- Quảng cáo 1 -->
                 <div class="ad-box">
                     <div class="ad-label">
                         <span>Được tài trợ</span>
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
                     <div class="ad-video-wrapper">
-                        <!-- Thêm autoplay=1&mute=1 để tự động chạy khi mở web -->
                         <iframe 
-                            src="https://www.youtube.com/embed/3JZ_D3ELwOQ?autoplay=1&mute=1&loop=1&playlist=3JZ_D3ELwOQ" 
+                            src="https://www.youtube.com/embed/3JZ_D3ELwOQ?autoplay=1&mute=1&loop=1&playlist=3JZ_D3ELwOQ&playsinline=1" 
                             title="Advertisement 1"
                             allow="autoplay; encrypted-media" 
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <div class="ad-title">Quảng cáo Sản phẩm Công nghệ Mới 2026</div>
+                    <div class="ad-title">Quảng cáo Sản phẩm Công nghệ Mới</div>
                     <a href="https://google.com" target="_blank" class="ad-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Xem ngay tại Website</a>
                 </div>
 
-                <!-- Khung Quảng cáo 2 (Tự động phát video thứ 2) -->
+                <!-- Quảng cáo 2 -->
                 <div class="ad-box">
                     <div class="ad-label">
                         <span>Quảng cáo Phim</span>
@@ -1079,62 +458,88 @@ Mã nguồn HTML / CSS / JS hoàn chỉnh:
                     </div>
                     <div class="ad-video-wrapper">
                         <iframe 
-                            src="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&loop=1&playlist=L_LUpnjgPso" 
+                            src="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&loop=1&playlist=L_LUpnjgPso&playsinline=1" 
                             title="Advertisement 2"
                             allow="autoplay; encrypted-media" 
                             allowfullscreen>
                         </iframe>
                     </div>
-                    <div class="ad-title">Trailer Phim Bom Tấn Mới Nhất Chiếu Rạp</div>
+                    <div class="ad-title">Trailer Phim Chiếu Rạp Mới Nhất</div>
                     <a href="#" class="ad-link"><i class="fa-solid fa-ticket"></i> Đặt vé ngay</a>
                 </div>
 
             </div>
         </div>
 
-        <!-- DANH SÁCH VIDEO GỢI Ý BÊN DƯỚI -->
+        <!-- DANH SÁCH 20 BỘ PHIM BAIULY STUDIO -->
         <div class="more-videos-section">
-            <h2 class="section-heading">Video Đề Xuất Khác</h2>
-            <div class="video-grid" id="recommendedGrid"></div>
+            <h2 class="section-heading">Danh Sách Phim Baiuly Studio (20 Bộ Full)</h2>
+            <div class="video-grid" id="movieGrid"></div>
         </div>
     </main>
 
     <!-- JAVASCRIPT -->
     <script>
-        // Toggle Sidebar
-        const toggleBtn = document.getElementById('toggleSidebar');
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('mainContent');
-
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('expanded');
-        });
-
-        // Đổ danh sách Video đề xuất bên dưới
-        const recommendedVideos = [
-            { title: "Hướng dẫn Lập trình Web Fullstack từ Zero", channel: "Dev Academy", views: "340 N", time: "3 ngày trước", duration: "18:20", thumb: "https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=500&q=80" },
-            { title: "Nhạc Lofi Chill Tập Trung Làm Việc 2026", channel: "Lofi Vibes", views: "1.5 M", time: "1 tháng trước", duration: "45:00", thumb: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80" },
-            { title: "Top 10 Phim Hành Động Hay Nhất Năm", channel: "Phim Review", views: "890 N", time: "2 tuần trước", duration: "12:45", thumb: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80" },
-            { title: "Khám Phá Công Nghệ Trí Tuệ Nhân Tạo Mới", channel: "Tech World", views: "120 N", time: "1 ngày trước", duration: "10:15", thumb: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80" }
+        // Danh sách 20 phim lấy trực tiếp từ kênh Baiuly Studio
+        const baiulyMovies = [
+            { id: "hFdf6KnNZow", title: "Full S1&S2&S3 | Từ Phế Vật Vong Quốc Đến Đỉnh Cấp Thiên Kiêu: Ta Dựa Vào Thiên Nhãn", views: "150 N lượt xem", time: "Cập nhật mới" },
+            { id: "WLWI_tsVlR0", title: "Xuyên Làm Chưởng Môn Rách, Ta Thu Đồ Vô Địch Tu Tiên Giới | Full Phần 1", views: "95 N lượt xem", time: "1 ngày trước" },
+            { id: "-rewjN4Iz6w", title: "Full S1 | Ép Trẫm Tự Cung Nhường Ngôi? Từ Liếm Cẩu Thành Bạo Chúa", views: "210 N lượt xem", time: "2 ngày trước" },
+            { id: "P7BawSlrA50", title: "Bắt Đầu Liền Vô Địch: Dùng Tu Vi Đại Đế Bồi Dưỡng Yêu Nghiệt", views: "180 N lượt xem", time: "3 ngày trước" },
+            { id: "V6jBic-QIkw", title: "Bị Cướp Chí Tôn Cốt, Tự Phế Tu Vi Kích Hoạt Hệ Thống", views: "320 N lượt xem", time: "4 ngày trước" },
+            { id: "demxNnN_N5U", title: "Full Phần 1-4 | Vạn Yêu Đồ Lục Chém Yêu Đoạt Đạo Hạnh", views: "500 N lượt xem", time: "1 tuần trước" },
+            { id: "Q-gJ_3irV_w", title: "Xuyên Không Trói Buộc HTTC: Sư Tôn Làm Màu Và Dàn Đồ Đệ Yêu Nghiệt", views: "410 N lượt xem", time: "1 tuần trước" },
+            { id: "CraLJjVcrFo", title: "Phần 5 | Bắt Đầu Liền Vô Địch: Dùng Tu Vi Đại Đế Bồi Dưỡng Yêu Nghiệt", views: "270 N lượt xem", time: "2 tuần trước" },
+            { id: "nOtnoqfZyxQ", title: "Sư Muội Là Nữ Đế Chuyển Sinh, Ta Lại Là Đại Sư Huynh Vô Địch Mở Hack", views: "190 N lượt xem", time: "2 tuần trước" },
+            { id: "i0PwoKtS3Ak", title: "Xuyên Thành Đệ Nhất Mỹ Nam, Ta Quyết Không Làm Toy Boy | Full Phần 1", views: "310 N lượt xem", time: "3 tuần trước" },
+            { id: "3ZDzvRPrMNE", title: "Phàm Nhân Luyện Thể: Nghịch Chiến Tu Chân Giới", views: "280 N lượt xem", time: "3 tuần trước" },
+            { id: "jdXFRf5TbO4", title: "Trăm Năm Tù Đày: Kiếp Này Tuyệt Đối Không Cứu Tiên Nữ", views: "450 N lượt xem", time: "1 tháng trước" },
+            { id: "wXHNybgyvt8", title: "Tác Giả Mạt Hạng Và Nữ Ma Tôn", views: "160 N lượt xem", time: "1 tháng trước" },
+            { id: "0bfwCIFhEDM", title: "Hành Trình Lột Xác Của Hàn Tiến: Cửu Linh Căn", views: "530 N lượt xem", time: "1 tháng trước" },
+            { id: "ThdXGzCIq60", title: "Chuyện Tình Tấu Hài Của Nữ Kiếm Tiên Lạnh Lùng Và Chiếc Tâm Ma Mỏ Hỗn", views: "220 N lượt xem", time: "2 tháng trước" },
+            { id: "m4xdABqyyRQ", title: "Nước Mắt Nữ Đế: Sự Thật Đau Lòng Phía Sau Lớp Mặt Nạ Của Sư Phụ", views: "380 N lượt xem", time: "2 tháng trước" },
+            { id: "vqkxkUaId5w", title: "Tưởng Phu Quân Trói Gà Không Chặt, Nữ Đế Sốc Khi Hắn Vả Bay Thần Tôn", views: "290 N lượt xem", time: "2 tháng trước" },
+            { id: "r7-pJb8sVlo", title: "Sư Tôn Trọng Sinh: Quyết Không Nhận Nghịch Đồ", views: "340 N lượt xem", time: "3 tháng trước" },
+            { id: "RdlP8vmvbp0", title: "Đi Tu Tiên Nhưng Cụ Ông Lại Chọn Hệ Cơ Bắp | Full Phần 1", views: "410 N lượt xem", time: "3 tháng trước" },
+            { id: "aJjl4kQs8YA", title: "Nữ Đế Chuyển Sinh: Bản Mệnh Yêu Thú Là Con Chó Ngốc? | Full Phần 1", views: "620 N lượt xem", time: "3 tháng trước" }
         ];
 
-        const grid = document.getElementById('recommendedGrid');
-        grid.innerHTML = recommendedVideos.map(v => `
-            <div class="video-card">
-                <div class="thumb-container">
-                    <img src="${v.thumb}" alt="Thumb">
-                    <span class="video-duration">${v.duration}</span>
-                </div>
-                <div class="video-meta-box">
-                    <div>
-                        <div class="v-title">${v.title}</div>
-                        <div class="v-channel">${v.channel}</div>
-                        <div class="v-stats">${v.views} lượt xem • ${v.time}</div>
+        // Render 20 thẻ phim ra danh sách
+        const grid = document.getElementById('movieGrid');
+        
+        function renderMovies() {
+            grid.innerHTML = baiulyMovies.map((movie, index) => `
+                <div class="video-card" onclick="playMovie('${movie.id}', '${movie.title.replace(/'/g, "\\'")}')">
+                    <div class="thumb-container">
+                        <img src="https://img.youtube.com/vi/${movie.id}/hqdefault.jpg" alt="${movie.title}">
+                        <div class="play-overlay">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-meta-box">
+                        <div class="v-title">${movie.title}</div>
+                        <div class="v-channel">Baiuly Studio <i class="fa-solid fa-circle-check" style="color: #3ea6ff; font-size: 10px;"></i></div>
+                        <div class="v-stats">${movie.views} • ${movie.time}</div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `).join('');
+        }
+
+        // Hàm đổi video chính ở trung tâm khi chọn phim
+        function playMovie(videoId, videoTitle) {
+            const iframe = document.getElementById('mainIframe');
+            const titleElement = document.getElementById('mainVideoTitle');
+            const playerSection = document.getElementById('playerSection');
+
+            // Cập nhật URL phát video với autoplay=1
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&enablejsapi=1&rel=0`;
+            titleElement.innerText = videoTitle;
+
+            // Cuộn mượt lên vị trí trình phát chính
+            playerSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        renderMovies();
     </script>
 </body>
 </html>
